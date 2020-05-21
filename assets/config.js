@@ -1,8 +1,8 @@
-let url = "http://127.0.0.1:8000/api/v1/";
+let url = "http://127.0.0.1:8000/";
 if (process.env.NODE_ENV == "production") {
   url = "https://seguridad-udem-api.herokuapp.com/api/v1/";
 } else {
-  url = "http://127.0.0.1:8000/api/v1/";
+  url = "http://127.0.0.1:8000/";
 }
 
 const config = { url_api: url };
