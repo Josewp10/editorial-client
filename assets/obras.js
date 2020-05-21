@@ -18,7 +18,7 @@ export default {
   },
   created() {
     this.listarObras();
-    this.guardarToken();
+    this.guardar_token();
   },
   computed: {},
   methods: {
@@ -32,7 +32,7 @@ export default {
       let arreglo = [];
       let arregloNombre = [];
       axios
-        .get(url, { headers: { token: token } } )
+        .get(url, { headers: { token: this.token } } )
         .then(response => {
           console.log(response);
 

@@ -33,7 +33,7 @@ export default {
       this.cargarPagina();
   },
   created() {
-    this.guardarToken();
+    this.guardar_token();
     this.listarTareas();
   },
   computed: {
@@ -69,7 +69,7 @@ export default {
     listarTareas() {
       let url = config.url_api + `tareas`;
       axios
-        .get(url, { headers: { token: token } })
+        .get(url, { headers: { token: this.token } })
         .then((response) => {
           console.log(response);
           this.lista_tareas = response.data.info;
@@ -91,7 +91,7 @@ export default {
       if (this.validacion == true) {
         let url = config.url_api + `tareas`;
         axios
-          .post(url, this.pu_tarea, { headers: { token: token } })
+          .post(url, this.pu_tarea, { headers: { token: this.token } })
           .then((response) => {
             this.lista_tareas.push(response.data.info);
             this.pu_tarea = {
@@ -117,7 +117,7 @@ export default {
     eliminarTareas({ item }) {
       let url = config.url_api + `tareas/${item.id}`;
       axios
-        .delete(url, { headers: { token: token } })
+        .delete(url, { headers: { token: this.token } })
         .then((response) => {
           let posicion = this.lista_tareas.findIndex(
             (lista_tareas) => lista_tareas.id == item.id
@@ -138,7 +138,7 @@ export default {
     cargarTarea({ item }) {
       let url = config.url_api + `tareas/${item.id}`;
       axios
-        .get(url, { headers: { token: token } })
+        .get(url, { headers: { token: this.token } })
         .then((response) => {
           var array = response.data.info;
 
@@ -164,7 +164,7 @@ export default {
           .put(
             url,
             this.pu_tarea,
-            { headers: { token: token } }
+            { headers: { token: this.token } }
           )
           .then((response) => {
             let posicion = this.lista_tareas.findIndex(
