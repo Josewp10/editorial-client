@@ -19,8 +19,8 @@ export default {
     this.cargarPagina();
 },
   created() {
-    this.listarObras();
     this.guardar_token();
+    this.listarObras();
   },
   computed: {},
   methods: {
@@ -34,14 +34,15 @@ export default {
         this.token = localStorage.getItem("token"); 
       } }, 
     listarObras() {
-      
-      console.log("TOKEN: "+this.token);
+      let token = localStorage.getItem("token"); 
+      this.token = token; 
+      console.log("TOKEN: "+ token);
       
       let url = config.url_api + `obra`;
       let arreglo = [];
       let arregloNombre = [];
       axios
-        .get(url, { headers: { token: this.token } } )
+        .get(url, { headers: { token: token } } )
         .then(response => {
           console.log(response);
 
