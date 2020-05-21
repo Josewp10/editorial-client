@@ -168,6 +168,7 @@ export default {
               query: { titulo: response.data["titulo"] },
             });
             //location.reload(true);
+            this.listarSeguimientos();
             alert("Seguimiento de la Obra Creado");
           })
           .catch((error) => {
@@ -240,6 +241,7 @@ export default {
               acciones: true,
             };
             //location.reload(true);
+            this.listarSeguimientos();
             alert("Seguimiento Actualizado");
           })
           .catch((error) => {

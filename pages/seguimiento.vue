@@ -64,6 +64,7 @@
                 <b-form-invalid-feedback :state="validacionEstado"></b-form-invalid-feedback>
               </b-form-group>
 
+              <!--
               <b-form-group label="Archivo">
                 <b-form-input
                   class="form-control"
@@ -75,7 +76,7 @@
                 />
                 <b-form-invalid-feedback :state="validacionArchivo"></b-form-invalid-feedback>
               </b-form-group>
-
+              -->
               <b-form-textarea
                 v-model="seguimiento.comentario"
                 id="Comentario"

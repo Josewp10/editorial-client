@@ -101,7 +101,7 @@ export default {
               modulo: "",
               acciones: true,
             };
-            //location.reload();
+            this.listarTareas();
             alert("Tarea Creada Correctamente");
           })
           .catch((error) => {
@@ -181,6 +181,7 @@ export default {
             };
             alert("Tarea Actualizada Correctamente");
             //location.reload();
+            this.listarTareas();
           })
           .catch((error) => {
             console.log(error);
