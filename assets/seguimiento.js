@@ -7,7 +7,7 @@ export default {
       mensaje: "CRUD De   Seguimiento",
       enEdicion: false,
       modal: true,
-
+      token:"",
       titulo: "",
       obra: null,
       indice: 0,
@@ -51,6 +51,12 @@ export default {
       ],
     };
   },
+  beforeMount(){
+    this.cargarPagina();
+  },
+  created(){
+    this.guardar_token();
+  },
   mounted() {
     this.obra = JSON.parse(sessionStorage.getItem("obra"));
     this.titulo = this.obra.titulo;
@@ -78,6 +84,15 @@ export default {
     },
   },
   methods: {
+    cargarPagina(){
+      let url = config.url_api ;
+      let token = localStorage.getItem("token"); this.token = token; 
+    },
+    guardar_token() { 
+      if (typeof window !== "undefined"){ 
+        this.url = config.url_api; 
+        this.token = localStorage.getItem("token"); 
+      } },
     validar_condicion(bool) {
       if (bool == false) {
         this.validacion = false;
@@ -97,7 +112,7 @@ export default {
       console.log("ID OBRA: " + this.obra.idobra);
       console.log("OBRA: " + this.obra.titulo);
       axios
-        .get(url)
+        .get(url, { headers: { token: this.token } })
         .then((response) => {
           console.log(response);
 
@@ -116,7 +131,7 @@ export default {
     listarTareas() {
       let url = config.url_api + `obra/tareas/`;
       axios
-        .get(url)
+        .get(url, { headers: { token: this.token } })
         .then((response) => {
           console.log(response);
           this.lista_tareas = response.data.info;
@@ -134,7 +149,7 @@ export default {
       let url = config.url_api + `seguimiento`;
       if (this.validacion == true) {
         axios
-          .post(url, this.seguimiento)
+          .post(url, this.seguimiento, { headers: { token: this.token } })
           .then((response) => {
             console.log(response);
             this.lista_seguimiento.push(response.data);
@@ -166,7 +181,7 @@ export default {
     eliminarSeguimiento({ item }) {
       let url = config.url_api + `seguimiento/${item.id}`;
       axios
-        .delete(url)
+        .delete(url, { headers: { token: this.token } })
         .then((response) => {
           let posicion = this.lista_seguimiento.findIndex(
             (lista_seguimiento) => lista_seguimiento.id == item.id
@@ -185,7 +200,7 @@ export default {
     cargarSeguimiento({ item }) {
       let url = config.url_api + `seguimiento/seg/${item.id}`;
       axios
-        .get(url)
+        .get(url, { headers: { token: this.token } })
         .then((response) => {
           var array = response.data.info;
           this.disabled = 1;
@@ -207,7 +222,7 @@ export default {
       let url = config.url_api + `seguimiento/${this.seguimiento.id}`;
       if (this.validacion == true) {
         axios
-          .put(url, this.seguimiento)
+          .put(url, this.seguimiento, { headers: { token: this.token } })
           .then((response) => {
             let posicion = this.lista_seguimiento.findIndex(
               (seguimiento) => seguimiento.id == this.seguimiento.id
@@ -246,7 +261,7 @@ export default {
       let url = config.url_api + `enviarCorreo/notificacion`;
       /////CONEXIÓN CON BACKEND PARA ENVÍO DE CORREO
       axios
-        .post(url, this.notificacion)
+        .post(url, this.notificacion, { headers: { token: this.token } })
         .then((response) => {
           console.log(response);
           this.modal = true;
@@ -265,7 +280,7 @@ export default {
     infoAutor() {
       let url = config.url_api + `obra/autor/${this.obra.idobra}`;
       axios
-        .get(url)
+        .get(url, { headers: { token: this.token } })
         .then((response) => {
           console.log("RESPONSE: " + response);
           this.autor = response.data.info;

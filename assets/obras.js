@@ -15,13 +15,19 @@ export default {
       },
       lista_obra: []
     };
-  },
+  },beforeMount(){
+    this.cargarPagina();
+},
   created() {
     this.listarObras();
     this.guardar_token();
   },
   computed: {},
   methods: {
+    cargarPagina(){
+      let url = config.url_api ;
+      let token = localStorage.getItem("token"); this.token = token; 
+    },
     guardar_token() { 
       if (typeof window !== "undefined"){ 
         this.url = config.url_api; 
