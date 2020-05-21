@@ -1,0 +1,21 @@
+{
+  "name": "Editorial",
+  "version": "1.0.0",
+  "description": "proyecto del sello editorial",
+  "author": "arroyavealvarezmarulanda",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bootstrap": "^4.1.3",
+    "bootstrap-vue": "^2.0.0",
+    "nuxt": "^2.0.0",
+    "vue-cookies": "^1.7.0"
+  },
+  "devDependencies": {}
+}
