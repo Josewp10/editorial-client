@@ -53,8 +53,9 @@ export default {
       }
     },
     listarTareas() {
+      let url = config.url_api + `tareas`;
       axios
-        .get("http://127.0.0.1:3001/tareas")
+        .get(url)
         .then((response) => {
           console.log(response);
           this.lista_tareas = response.data.info;
@@ -74,8 +75,9 @@ export default {
      */
     crearTareas() {
       if (this.validacion == true) {
+        let url = config.url_api + `tareas`;
         axios
-          .post("http://127.0.0.1:3001/tareas", this.pu_tarea)
+          .post(url, this.pu_tarea)
           .then((response) => {
             this.lista_tareas.push(response.data.info);
             this.pu_tarea = {
@@ -99,8 +101,9 @@ export default {
      * Método que elimina elementos de la lista de tareas y actualiza el localStorage
      */
     eliminarTareas({ item }) {
+      let url = config.url_api + `tareas/${item.id}`;
       axios
-        .delete(`http://127.0.0.1:3001/tareas/${item.id}`)
+        .delete(url)
         .then((response) => {
           let posicion = this.lista_tareas.findIndex(
             (lista_tareas) => lista_tareas.id == item.id
@@ -119,8 +122,9 @@ export default {
      * Método que carga y lista las obras desde localStorage
      */
     cargarTarea({ item }) {
+      let url = config.url_api + `tareas/${item.id}`;
       axios
-        .get(`http://127.0.0.1:3001/tareas/${item.id}`)
+        .get(url)
         .then((response) => {
           var array = response.data.info;
 
@@ -141,9 +145,10 @@ export default {
      */
     actualizarTarea() {
       if (this.validacion == true) {
+        let url = config.url_api + `tareas/${this.pu_tarea.id}`;
         axios
           .put(
-            `http://127.0.0.1:3001/tareas/${this.pu_tarea.id}`,
+            url,
             this.pu_tarea
           )
           .then((response) => {

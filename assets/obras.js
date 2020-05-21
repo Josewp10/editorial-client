@@ -1,4 +1,5 @@
 import axios from "axios";
+import config from "../assets/config";
 
 export default {
   data() {
@@ -20,10 +21,11 @@ export default {
   computed: {},
   methods: {
     listarObras() {
+      let url = config.url_api + `obra`;
       let arreglo = [];
       let arregloNombre = [];
       axios
-        .get("http://127.0.0.1:3001/obra")
+        .get(url)
         .then(response => {
           console.log(response);
 
