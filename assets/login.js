@@ -35,7 +35,7 @@ export default {
       this.url = url;
     },
     iniciar() {
-      let url = config.url_api + "login";
+      let url = config.url_api + "api/v1/login";
 
       if (this.usuario.id.length > 0 && this.usuario.clave.length > 0) {
         axios
