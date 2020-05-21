@@ -101,7 +101,8 @@ export default {
               modulo: "",
               acciones: true,
             };
-            this.listarTareas();
+            location.reload();
+            //this.listarTareas();
             alert("Tarea Creada Correctamente");
           })
           .catch((error) => {
@@ -180,8 +181,8 @@ export default {
               acciones: true,
             };
             alert("Tarea Actualizada Correctamente");
-            //location.reload();
-            this.listarTareas();
+            location.reload();
+            //this.listarTareas();
           })
           .catch((error) => {
             console.log(error);
