@@ -5,6 +5,7 @@ export default {
   data() {
     return {
       mensaje: "CRUD De Obra",
+      token: "",
       enEdicion: false,
       nombreObra: "",
       seguimiento: {
@@ -17,15 +18,21 @@ export default {
   },
   created() {
     this.listarObras();
+    this.guardarToken();
   },
   computed: {},
   methods: {
+    guardar_token() { 
+      if (typeof window !== "undefined"){ 
+        this.url = config.url_api; 
+        this.token = localStorage.getItem("token"); 
+      } }, 
     listarObras() {
       let url = config.url_api + `obra`;
       let arreglo = [];
       let arregloNombre = [];
       axios
-        .get(url)
+        .get(url, { headers: { token: token } } )
         .then(response => {
           console.log(response);
 
