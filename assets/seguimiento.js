@@ -97,7 +97,7 @@ export default {
       console.log("ID OBRA: " + this.obra.idobra);
       console.log("OBRA: " + this.obra.titulo);
       axios
-        .get(url)
+        .get(`http://127.0.0.1:8000/seguimiento/${this.obra.idobra}`)
         .then((response) => {
           console.log(response);
 
