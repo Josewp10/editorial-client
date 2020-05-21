@@ -1,4 +1,5 @@
 import axios from "axios";
+import config from "../assets/config";
 
 export default {
   data() {
@@ -6,25 +7,25 @@ export default {
       mensaje: "CRUD De   Seguimiento",
       enEdicion: false,
       modal: true,
-      
+
       titulo: "",
       obra: null,
       indice: 0,
       disabled: 0,
       seguimiento: {
         id: "",
-        id_propuesta:"",
+        id_propuesta: "",
         id_tarea: "",
         fecha: "",
         estado: "",
         comentario: "",
         archivo: "",
-        acciones: true
+        acciones: true,
       },
       autor: [],
       notificacion: {
         tipo: "",
-        comentario: ""
+        comentario: "",
       },
       lista_seguimiento: [],
       lista_tareas: [],
@@ -33,21 +34,21 @@ export default {
         { value: "Aprobado", text: "Activo" },
         { value: "En Revisión", text: "En Revisión" },
         { value: "Reprobado", text: "Reprobado" },
-        { value: "Cancelado", text: "Cancelado" }
+        { value: "Cancelado", text: "Cancelado" },
       ],
       opciones_notificacion: [
         {
           value: null,
           text: "Seleccione el tipo de Notificación",
-          disabled: true
+          disabled: true,
         },
         { value: "Con Ajustes", text: "Con Ajustes" },
         {
           value: "Versión Maquetada para revisión",
-          text: "Versión Maquetada para revisión"
+          text: "Versión Maquetada para revisión",
         },
-        { value: "Versión Final", text: "Versión Final" }
-      ]
+        { value: "Versión Final", text: "Versión Final" },
+      ],
     };
   },
   mounted() {
@@ -74,7 +75,7 @@ export default {
     },
     validacionEstado() {
       return this.validar_condicion(this.seguimiento.estado.length > 0);
-    }
+    },
   },
   methods: {
     validar_condicion(bool) {
@@ -91,12 +92,13 @@ export default {
     },
     //TRAE LOS SEGUIMIENTOS DE LA BASE DE DATOS FILTRADOS POR OBRA
     listarSeguimientos() {
+      let url = config.url_api + `/seguimiento/${this.obra.idobra}`;
       //let id = this.obra.idobra;
       console.log("ID OBRA: " + this.obra.idobra);
       console.log("OBRA: " + this.obra.titulo);
       axios
-        .get(`http://127.0.0.1:3001/seguimiento/${this.obra.idobra}`)
-        .then(response => {
+        .get(url)
+        .then((response) => {
           console.log(response);
 
           this.lista_seguimiento = response.data.info;
@@ -106,33 +108,34 @@ export default {
 
           //this.enEdicion = true;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
     //TRAE LAS TAREAS DE LA BASE DE DATOS PARA SELECCIONARLAS EN EL FORMULARIO
     listarTareas() {
+      let url = config.url_api + `/obra/tareas/`;
       axios
-        .get("http://127.0.0.1:3001/obra/tareas")
-        .then(response => {
+        .get(url)
+        .then((response) => {
           console.log(response);
           this.lista_tareas = response.data.info;
 
           console.log(this.lista_tareas);
           //alert(lista_tareas)
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
     //CREA UN NUEVO SEGUIMIENTO EN LA BASE DE DATOS
     crearSeguimiento() {
       //console.log(this.seguimiento);
-
+      let url = config.url_api + `/seguimiento`;
       if (this.validacion == true) {
         axios
-          .post("http://127.0.0.1:3001/seguimiento", this.seguimiento)
-          .then(response => {
+          .post(url, this.seguimiento)
+          .then((response) => {
             console.log(response);
             this.lista_seguimiento.push(response.data);
             this.disabled = 0;
@@ -143,16 +146,16 @@ export default {
               estado: "",
               comentario: "",
               archivo: "",
-              acciones: true
+              acciones: true,
             };
             this.$router.push({
               path: "seguimiento",
-              query: { titulo: response.data["titulo"] }
+              query: { titulo: response.data["titulo"] },
             });
             location.reload(true);
             alert("Seguimiento de la Obra Creado");
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error.response);
           });
       } else {
@@ -161,11 +164,12 @@ export default {
     },
     //ELIMINA SEGUIMIENTOS DE LA BASE DE DATOS
     eliminarSeguimiento({ item }) {
+      let url = config.url_api + `/seguimiento/${item.id}`;
       axios
-        .delete(`http://127.0.0.1:3001/seguimiento/${item.id}`)
-        .then(response => {
+        .delete(url)
+        .then((response) => {
           let posicion = this.lista_seguimiento.findIndex(
-            lista_seguimiento => lista_seguimiento.id == item.id
+            (lista_seguimiento) => lista_seguimiento.id == item.id
           );
           this.lista_seguimiento.splice(posicion, 1);
 
@@ -173,15 +177,16 @@ export default {
           console.log(item.id);
           alert("Seguimiento Eliminado");
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
     //CREA UN NUEVO SEGUIMIENTO EN LA BASE DE DATOS
     cargarSeguimiento({ item }) {
+      let url = config.url_api + `/seguimiento/seg/${item.id}`;
       axios
-        .get(`http://127.0.0.1:3001/seguimiento/seg/${item.id}`)
-        .then(response => {
+        .get(url)
+        .then((response) => {
           var array = response.data.info;
           this.disabled = 1;
           this.enEdicion = true;
@@ -193,21 +198,19 @@ export default {
           this.seguimiento.archivo = array[0].archivo;
           this.seguimiento.acciones = true;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
     //ALMACENA LOS VALORES DEL SEGUIMIENTO MODIFICADO EN LA BASE DE DATOS
     actualizarSeguimiento() {
+      let url = config.url_api + `/seguimiento/${this.seguimiento.id}`;
       if (this.validacion == true) {
         axios
-          .put(
-            `http://127.0.0.1:3001/seguimiento/${this.seguimiento.id}`,
-            this.seguimiento
-          )
-          .then(response => {
+          .put(url, this.seguimiento)
+          .then((response) => {
             let posicion = this.lista_seguimiento.findIndex(
-              seguimiento => seguimiento.id == this.seguimiento.id
+              (seguimiento) => seguimiento.id == this.seguimiento.id
             );
             this.lista_seguimiento.splice(posicion, 1, this.seguimiento);
             this.enEdicion = false;
@@ -219,12 +222,12 @@ export default {
               estado: "",
               comentario: "",
               archivo: "",
-              acciones: true
+              acciones: true,
             };
             location.reload(true);
             alert("Seguimiento Actualizado");
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error);
           });
       } else {
@@ -238,19 +241,17 @@ export default {
         tarea: this.lista_seguimiento[this.indice].tarea,
         tipo: "",
         estado: this.lista_seguimiento[this.indice].estado,
-        comentario: ""
+        comentario: "",
       };
+      let url = config.url_api + `/enviarCorreo/notificacion`;
       /////CONEXIÓN CON BACKEND PARA ENVÍO DE CORREO
       axios
-        .post(
-          `http://127.0.0.1:3001/enviarCorreo/notificacion`,
-          this.notificacion
-        )
-        .then(response => {
+        .post(url, this.notificacion)
+        .then((response) => {
           console.log(response);
           this.modal = true;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -262,16 +263,17 @@ export default {
     },
     //TRAE LA INFORMACIÓN DEL AUTOR PARA UTILIZARLA EN LA NOTIFICACIÓN
     infoAutor() {
+      let url = config.url_api + `/obra/autor/${this.obra.idobra}`;
       axios
-        .get(`http://127.0.0.1:3001/obra/autor/${this.obra.idobra}`)
-        .then(response => {
+        .get(url)
+        .then((response) => {
           console.log("RESPONSE: " + response);
           this.autor = response.data.info;
           console.log("EMAIL: " + this.autor[0].email);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
-    }
-  }
+    },
+  },
 };

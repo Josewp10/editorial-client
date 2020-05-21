@@ -1,5 +1,5 @@
 import axios from "axios";
-import config from "../assets/config"
+import config from "../assets/config";
 
 export default {
   //Asigno el layout
@@ -17,11 +17,11 @@ export default {
         clave: "",
         correo: "",
         descripcion: "",
-        primera_vez: ""
-      }
+        primera_vez: "",
+      },
     };
   },
-  computed:{
+  computed: {
     validar_Id() {
       return this.usuario.id.length > 0;
     },
@@ -31,16 +31,16 @@ export default {
   },
   methods: {
     cargaPagina() {
-        let url = config.url_api;
-        this.url = url;
-      },
-      iniciar() {
-        let url = config.url_api + "login"; 
+      let url = config.url_api;
+      this.url = url;
+    },
+    iniciar() {
+      let url = config.url_api + "login";
 
       if (this.usuario.id.length > 0 && this.usuario.clave.length > 0) {
         axios
           .post(url, this.usuario)
-          .then(response => {
+          .then((response) => {
             let data = response.data;
             console.log("Data:", data);
             localStorage.setItem("token", data.info);
@@ -49,13 +49,13 @@ export default {
             console.log("Rol: ", data.rol);
             this.$router.push("/principal");
           })
-          .catch(error => {
+          .catch((error) => {
             this.mensaje2 = error.response.data.message;
             console.log(error.response);
           });
       } else {
         alert("LLene todos los campos correctamente");
       }
-    }
-  }
+    },
+  },
 };

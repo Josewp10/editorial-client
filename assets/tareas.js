@@ -1,4 +1,5 @@
 import axios from "axios";
+import config from "../assets/config";
 
 export default {
   data() {
@@ -12,11 +13,15 @@ export default {
         nombre: "",
         descripcion: "",
         modulo: "",
-        acciones: true
+        acciones: true,
       },
       lista_tareas: [],
       opciones_modulos: [
-        { value: null, text: "Seleccione el Modulo al que pertenece la tarea", disabled: true },
+        {
+          value: null,
+          text: "Seleccione el Modulo al que pertenece la tarea",
+          disabled: true,
+        },
         { value: "01", text: "01 - Gestión de propuestas de publicación" },
         { value: "02", text: "02 - Gestión Evaluación" },
         { value: "03", text: "03 - Gestión Publicación" },
@@ -35,7 +40,7 @@ export default {
     },
     validaciondescripcion() {
       return this.validar_condicion(this.pu_tarea.descripcion.length > 0);
-    }
+    },
   },
   methods: {
     validar_condicion(bool) {
@@ -50,7 +55,7 @@ export default {
     listarTareas() {
       axios
         .get("http://127.0.0.1:3001/tareas")
-        .then(response => {
+        .then((response) => {
           console.log(response);
           this.lista_tareas = response.data.info;
           for (let i in this.lista_tareas) {
@@ -59,7 +64,7 @@ export default {
           console.log(this.lista_tareas);
           //this.enEdicion = true;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -71,19 +76,19 @@ export default {
       if (this.validacion == true) {
         axios
           .post("http://127.0.0.1:3001/tareas", this.pu_tarea)
-          .then(response => {
+          .then((response) => {
             this.lista_tareas.push(response.data.info);
             this.pu_tarea = {
               id: "",
               nombre: "",
               descripcion: "",
               modulo: "",
-              acciones: true
+              acciones: true,
             };
             location.reload();
             alert("Tarea Creada Correctamente");
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error);
           });
       } else {
@@ -96,9 +101,9 @@ export default {
     eliminarTareas({ item }) {
       axios
         .delete(`http://127.0.0.1:3001/tareas/${item.id}`)
-        .then(response => {
+        .then((response) => {
           let posicion = this.lista_tareas.findIndex(
-            lista_tareas => lista_tareas.id == item.id
+            (lista_tareas) => lista_tareas.id == item.id
           );
           this.lista_tareas.splice(posicion, 1);
 
@@ -106,7 +111,7 @@ export default {
           console.log(item.id);
           alert("Tarea Eliminada");
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -116,7 +121,7 @@ export default {
     cargarTarea({ item }) {
       axios
         .get(`http://127.0.0.1:3001/tareas/${item.id}`)
-        .then(response => {
+        .then((response) => {
           var array = response.data.info;
 
           this.enEdicion = true;
@@ -126,7 +131,7 @@ export default {
           this.pu_tarea.modulo = array[0].modulo;
           this.pu_tarea.acciones = true;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -141,9 +146,9 @@ export default {
             `http://127.0.0.1:3001/tareas/${this.pu_tarea.id}`,
             this.pu_tarea
           )
-          .then(response => {
+          .then((response) => {
             let posicion = this.lista_tareas.findIndex(
-              pu_tarea => pu_tarea.id == this.pu_tarea.id
+              (pu_tarea) => pu_tarea.id == this.pu_tarea.id
             );
             this.lista_tareas.splice(posicion, 1, this.pu_tarea);
             this.enEdicion = false;
@@ -152,17 +157,17 @@ export default {
               nombre: "",
               descripcion: "",
               modulo: "",
-              acciones: true
+              acciones: true,
             };
             alert("Tarea Actualizada Correctamente");
             location.reload();
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error);
           });
       } else {
         alert("LLene todos los campos correctamente");
       }
-    }
-  }
+    },
+  },
 };
