@@ -251,17 +251,17 @@ export default {
     },
     ///ENVÍO DE CORREO
     enviarCorreo() {
-      this.notificacion = {
+      let noti = {
         titulo: this.obra.titulo,
         tarea: this.lista_seguimiento[this.indice].tarea,
-        tipo: "",
+        tipo: this.notificacion.tipo,
         estado: this.lista_seguimiento[this.indice].estado,
-        comentario: "",
+        comentario: this.notificacion.tipo
       };
       let url = config.url_api + `enviarCorreo/notificacion`;
       /////CONEXIÓN CON BACKEND PARA ENVÍO DE CORREO
       axios
-        .post(url, this.notificacion, { headers: { token: this.token } })
+        .post(url, noti, { headers: { token: this.token } })
         .then((response) => {
           console.log(response);
           this.modal = true;
