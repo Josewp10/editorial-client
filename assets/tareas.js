@@ -5,6 +5,7 @@ export default {
   data() {
     return {
       message: "crud Tareas",
+      token:"",
       enEdicion: false,
       showTable: true,
       validacion: "",
@@ -29,6 +30,7 @@ export default {
     };
   },
   created() {
+    this.guardarToken();
     this.listarTareas();
   },
   computed: {
@@ -43,6 +45,11 @@ export default {
     },
   },
   methods: {
+    guardar_token() { 
+      if (typeof window !== "undefined"){ 
+        this.url = config.url_api; 
+        this.token = localStorage.getItem("token"); 
+      } },
     validar_condicion(bool) {
       if (bool == false) {
         this.validacion = false;
@@ -55,7 +62,7 @@ export default {
     listarTareas() {
       let url = config.url_api + `tareas`;
       axios
-        .get(url)
+        .get(url, { headers: { token: token } })
         .then((response) => {
           console.log(response);
           this.lista_tareas = response.data.info;
@@ -77,7 +84,7 @@ export default {
       if (this.validacion == true) {
         let url = config.url_api + `tareas`;
         axios
-          .post(url, this.pu_tarea)
+          .post(url, this.pu_tarea, { headers: { token: token } })
           .then((response) => {
             this.lista_tareas.push(response.data.info);
             this.pu_tarea = {
@@ -103,7 +110,7 @@ export default {
     eliminarTareas({ item }) {
       let url = config.url_api + `tareas/${item.id}`;
       axios
-        .delete(url)
+        .delete(url, { headers: { token: token } })
         .then((response) => {
           let posicion = this.lista_tareas.findIndex(
             (lista_tareas) => lista_tareas.id == item.id
@@ -124,7 +131,7 @@ export default {
     cargarTarea({ item }) {
       let url = config.url_api + `tareas/${item.id}`;
       axios
-        .get(url)
+        .get(url, { headers: { token: token } })
         .then((response) => {
           var array = response.data.info;
 
@@ -149,7 +156,8 @@ export default {
         axios
           .put(
             url,
-            this.pu_tarea
+            this.pu_tarea,
+            { headers: { token: token } }
           )
           .then((response) => {
             let posicion = this.lista_tareas.findIndex(
