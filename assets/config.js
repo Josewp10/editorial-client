@@ -1,6 +1,6 @@
 let url = "http://127.0.0.1:8000/";
 if (process.env.NODE_ENV == "production") {
-  url = "https://seguridad-udem-api.herokuapp.com/";
+  url = "https://practica-editorial-api.herokuapp.com/";
 } else {
   url = "http://127.0.0.1:8000/";
 }
