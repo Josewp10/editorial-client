@@ -167,7 +167,7 @@ export default {
               path: "seguimiento",
               query: { titulo: response.data["titulo"] },
             });
-            location.reload(true);
+            //location.reload(true);
             alert("Seguimiento de la Obra Creado");
           })
           .catch((error) => {
@@ -239,7 +239,7 @@ export default {
               archivo: "",
               acciones: true,
             };
-            location.reload(true);
+            //location.reload(true);
             alert("Seguimiento Actualizado");
           })
           .catch((error) => {
@@ -256,7 +256,7 @@ export default {
         tarea: this.lista_seguimiento[this.indice].tarea,
         tipo: this.notificacion.tipo,
         estado: this.lista_seguimiento[this.indice].estado,
-        comentario: this.notificacion.tipo
+        comentario: this.notificacion.comentario
       };
       let url = config.url_api + `enviarCorreo/notificacion`;
       /////CONEXIÓN CON BACKEND PARA ENVÍO DE CORREO

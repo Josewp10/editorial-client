@@ -101,7 +101,7 @@ export default {
               modulo: "",
               acciones: true,
             };
-            location.reload();
+            //location.reload();
             alert("Tarea Creada Correctamente");
           })
           .catch((error) => {
@@ -180,7 +180,7 @@ export default {
               acciones: true,
             };
             alert("Tarea Actualizada Correctamente");
-            location.reload();
+            //location.reload();
           })
           .catch((error) => {
             console.log(error);
