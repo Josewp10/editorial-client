@@ -29,6 +29,9 @@ export default {
       ],
     };
   },
+  beforeMount(){
+      this.cargarPagina();
+  },
   created() {
     this.guardarToken();
     this.listarTareas();
@@ -45,6 +48,10 @@ export default {
     },
   },
   methods: {
+    cargarPagina(){
+      let url = config.url_api ;
+      let token = localStorage.getItem("token"); this.token = token; 
+    },
     guardar_token() { 
       if (typeof window !== "undefined"){ 
         this.url = config.url_api; 
