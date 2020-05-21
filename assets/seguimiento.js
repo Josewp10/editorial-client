@@ -92,7 +92,7 @@ export default {
     },
     //TRAE LOS SEGUIMIENTOS DE LA BASE DE DATOS FILTRADOS POR OBRA
     listarSeguimientos() {
-      let url = config.url_api + `/seguimiento/${this.obra.idobra}`;
+      let url = config.url_api + `seguimiento/${this.obra.idobra}`;
       //let id = this.obra.idobra;
       console.log("ID OBRA: " + this.obra.idobra);
       console.log("OBRA: " + this.obra.titulo);
@@ -114,7 +114,7 @@ export default {
     },
     //TRAE LAS TAREAS DE LA BASE DE DATOS PARA SELECCIONARLAS EN EL FORMULARIO
     listarTareas() {
-      let url = config.url_api + `/obra/tareas/`;
+      let url = config.url_api + `obra/tareas/`;
       axios
         .get(url)
         .then((response) => {
@@ -131,7 +131,7 @@ export default {
     //CREA UN NUEVO SEGUIMIENTO EN LA BASE DE DATOS
     crearSeguimiento() {
       //console.log(this.seguimiento);
-      let url = config.url_api + `/seguimiento`;
+      let url = config.url_api + `seguimiento`;
       if (this.validacion == true) {
         axios
           .post(url, this.seguimiento)
@@ -164,7 +164,7 @@ export default {
     },
     //ELIMINA SEGUIMIENTOS DE LA BASE DE DATOS
     eliminarSeguimiento({ item }) {
-      let url = config.url_api + `/seguimiento/${item.id}`;
+      let url = config.url_api + `seguimiento/${item.id}`;
       axios
         .delete(url)
         .then((response) => {
@@ -183,7 +183,7 @@ export default {
     },
     //CREA UN NUEVO SEGUIMIENTO EN LA BASE DE DATOS
     cargarSeguimiento({ item }) {
-      let url = config.url_api + `/seguimiento/seg/${item.id}`;
+      let url = config.url_api + `seguimiento/seg/${item.id}`;
       axios
         .get(url)
         .then((response) => {
@@ -204,7 +204,7 @@ export default {
     },
     //ALMACENA LOS VALORES DEL SEGUIMIENTO MODIFICADO EN LA BASE DE DATOS
     actualizarSeguimiento() {
-      let url = config.url_api + `/seguimiento/${this.seguimiento.id}`;
+      let url = config.url_api + `seguimiento/${this.seguimiento.id}`;
       if (this.validacion == true) {
         axios
           .put(url, this.seguimiento)
@@ -243,7 +243,7 @@ export default {
         estado: this.lista_seguimiento[this.indice].estado,
         comentario: "",
       };
-      let url = config.url_api + `/enviarCorreo/notificacion`;
+      let url = config.url_api + `enviarCorreo/notificacion`;
       /////CONEXIÓN CON BACKEND PARA ENVÍO DE CORREO
       axios
         .post(url, this.notificacion)
@@ -263,7 +263,7 @@ export default {
     },
     //TRAE LA INFORMACIÓN DEL AUTOR PARA UTILIZARLA EN LA NOTIFICACIÓN
     infoAutor() {
-      let url = config.url_api + `/obra/autor/${this.obra.idobra}`;
+      let url = config.url_api + `obra/autor/${this.obra.idobra}`;
       axios
         .get(url)
         .then((response) => {
