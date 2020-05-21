@@ -34,6 +34,10 @@ export default {
         this.token = localStorage.getItem("token"); 
       } }, 
     listarObras() {
+      let token = localStorage.getItem("token"); 
+      this.token = token; 
+      console.log(this.token);
+      
       let url = config.url_api + `obra`;
       let arreglo = [];
       let arregloNombre = [];
